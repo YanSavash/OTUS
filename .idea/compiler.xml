@@ -10,7 +10,8 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="hw01-maven" target="1.5" />
+      <module name="hw01-maven" target="8" />
+      <module name="OTUS" target="8" />
     </bytecodeTargetLevel>
   </component>
 </project>
