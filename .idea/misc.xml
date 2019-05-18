@@ -7,5 +7,10 @@
         <option value="$PROJECT_DIR$/pom.xml" />
       </list>
     </option>
+    <option name="ignoredFiles">
+      <set>
+        <option value="$PROJECT_DIR$/hw03-my_testing_framework/pom.xml" />
+      </set>
+    </option>
   </component>
 </project>

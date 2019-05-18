@@ -7,11 +7,14 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="hw01-maven" />
+        <module name="hw02-my-array-list" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="hw01-maven" target="8" />
-      <module name="OTUS" target="8" />
+      <module name="hw01-maven" target="11" />
+      <module name="hw02-my-array-list" target="11" />
+      <module name="hw03my_testing_framework" target="11" />
+      <module name="OTUS" target="11" />
     </bytecodeTargetLevel>
   </component>
 </project>
