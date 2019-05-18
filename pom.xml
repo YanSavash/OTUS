@@ -17,6 +17,7 @@
     <modules>
         <module>hw01-maven</module>
         <module>hw02myarraylist</module>
+        <module>hw03-my_testing-framework</module>
     </modules>
 
     <properties>
