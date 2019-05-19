@@ -1,5 +1,6 @@
 package hw03;
 
+import myAnnotations.*;
 
 public class Framework {
 
