@@ -51,7 +51,4 @@ public class Runner {
         return test;
     }
 
-
-
-    //глюки
 }
