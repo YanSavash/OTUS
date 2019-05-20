@@ -22,23 +22,20 @@ public class Runner {
         Map<String, Method> test = makeMapAnnotationsMethods(testClass, Test.class);
         Map<String, Method> afterEach = makeMapAnnotationsMethods(testClass, AfterEach.class);
         Map<String, Method> afterAll = makeMapAnnotationsMethods(testClass, AfterAll.class);
-
-        for (Method t : test.values()) {
-            try {
+        try {
+            beforeAll.get("interface myAnnotations.BeforeAll static void hw03.Framework.beforeAll()").invoke(null);
+            for (Method t : test.values()) {
                 Constructor<?> constructor = testClass.getConstructor();
                 Object obj = constructor.newInstance();
-                for (Method before : beforeAll.values())
-                    before.invoke(obj);
                 for (Method before : beforeEach.values())
                     before.invoke(obj);
                 t.invoke(obj);
                 for (Method after : afterEach.values())
                     after.invoke(obj);
-                for (Method before : afterAll.values())
-                    before.invoke(obj);
-            } catch (IllegalAccessException e) {
-                e.printStackTrace();
             }
+            afterAll.get("interface myAnnotations.AfterAll static void hw03.Framework.afterAll()").invoke(null);
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
         }
     }
 
