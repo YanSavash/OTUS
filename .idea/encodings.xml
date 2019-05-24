@@ -3,8 +3,8 @@
   <component name="Encoding">
     <file url="file://$PROJECT_DIR$" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/hw01-maven" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/hw02myarraylist" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/hw03-my_testing-framework" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/hw03-my_testing_framework" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/hw02-my-array-list" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/hw03-my-testing-framework" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/hw04-magic-log" charset="UTF-8" />
   </component>
 </project>
