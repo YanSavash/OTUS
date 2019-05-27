@@ -7,8 +7,3 @@ public class Demo {
         magicClass.calculation(6);
     }
 }
-
-
-
-
-//git rm -r --cached .idea
