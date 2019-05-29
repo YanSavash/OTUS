@@ -5,8 +5,8 @@ import Annotations.Log;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.HashSet;
+import java.util.Set;
 
 public class IoC {
 
@@ -17,7 +17,7 @@ public class IoC {
         return (TestLoggingInterface) Proxy.newProxyInstance(IoC.class.getClassLoader(), new Class<?>[]{TestLoggingInterface.class}, handler);
     }
 
-    private static Map<String, Method> logMethods = new HashMap<>();
+    private static Set<String> logMethodsStrings = new HashSet<>();
 
     static class MagicInvocHandler implements InvocationHandler {
         private final TestLoggingInterface magicClass;
@@ -28,14 +28,14 @@ public class IoC {
                 if (m.isAnnotationPresent(Log.class)) {
                     Log lg = m.getAnnotation(Log.class); //я знаю, что данная проверка необязательна - я для себя, практикую возможности аннотаций))
                     if (lg.mark().equals("true"))
-                        logMethods.put(m.getName(), m);
+                        logMethodsStrings.add(m.getName());
                 }
         }
 
 
         @Override
         public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
-            if (logMethods.containsKey(method.getName())) {
+            if (logMethodsStrings.contains(method.getName())) {
                 System.out.println("executed method:" + method.getName() + " param: " + args[0]);
             }
             return method.invoke(magicClass, args);
