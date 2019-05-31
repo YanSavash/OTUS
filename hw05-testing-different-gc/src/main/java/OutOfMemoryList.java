@@ -9,9 +9,15 @@ public class OutOfMemoryList {
 
     public static void run(){
         List<List> memory = new LinkedList();
+        int a =0;
         for (int i = 0; i < Integer.MAX_VALUE; i++){
             memory.add(makeBrick());
             System.out.println(i);
+            if (a>3){
+                memory.remove(a-2);
+                a = 0;
+            }
+            a++;
             //Label_1
 //            try {
 //                Thread.sleep(10);
