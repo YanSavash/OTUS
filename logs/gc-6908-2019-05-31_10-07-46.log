@@ -1,0 +1,54 @@
+[2019-05-31T10:07:46.755+0300][0.015s][debug][gc] ConcGCThreads: 0
+[2019-05-31T10:07:46.755+0300][0.016s][debug][gc] ParallelGCThreads: 4
+[2019-05-31T10:07:46.755+0300][0.016s][info ][gc] Using Concurrent Mark Sweep
+[2019-05-31T10:07:48.753+0300][2.014s][info ][gc] GC(0) Pause Young (Allocation Failure) 266M->277M(2014M) 1695.681ms
+[2019-05-31T10:07:49.434+0300][2.695s][info ][gc] GC(1) Pause Young (Allocation Failure) 544M->590M(2014M) 599.156ms
+[2019-05-31T10:07:50.212+0300][3.473s][info ][gc] GC(2) Pause Young (Allocation Failure) 856M->916M(2014M) 617.789ms
+[2019-05-31T10:07:50.220+0300][3.481s][info ][gc] GC(3) Pause Initial Mark 921M->921M(2014M) 7.765ms
+[2019-05-31T10:07:50.220+0300][3.481s][info ][gc] GC(3) Concurrent Mark
+[2019-05-31T10:07:50.923+0300][4.184s][info ][gc] GC(4) Pause Young (Allocation Failure) 1182M->1233M(2014M) 632.482ms
+[2019-05-31T10:07:51.618+0300][4.879s][info ][gc] GC(5) Pause Young (Allocation Failure) 1499M->1549M(2014M) 627.869ms
+[2019-05-31T10:07:53.062+0300][6.323s][debug][gc] GC(3) Concurrent active time: 1.581ms
+[2019-05-31T10:07:53.062+0300][6.323s][info ][gc] GC(3) Concurrent Mark 2841.804ms
+[2019-05-31T10:07:53.062+0300][6.323s][debug][gc] GC(7) Concurrent mode failure
+[2019-05-31T10:07:56.449+0300][9.711s][info ][gc] GC(7) Pause Full (Allocation Failure) 1816M->1392M(2014M) 4764.722ms
+[2019-05-31T10:07:56.449+0300][9.711s][info ][gc] GC(6) Pause Young (Allocation Failure) 1816M->1392M(2014M) 4764.799ms
+[2019-05-31T10:08:01.162+0300][14.423s][info ][gc] GC(9) Pause Full (Allocation Failure) 2014M->1627M(2014M) 3980.538ms
+[2019-05-31T10:08:01.162+0300][14.423s][info ][gc] GC(8) Pause Young (Allocation Failure) 1658M->1627M(2014M) 4645.591ms
+[2019-05-31T10:08:01.239+0300][14.501s][info ][gc] GC(10) Pause Initial Mark 1749M->1749M(2014M) 32.679ms
+[2019-05-31T10:08:01.239+0300][14.501s][info ][gc] GC(10) Concurrent Mark
+[2019-05-31T10:08:02.605+0300][15.867s][debug][gc] GC(10) Concurrent active time: 1.366ms
+[2019-05-31T10:08:02.605+0300][15.867s][info ][gc] GC(10) Concurrent Mark 1365.839ms
+[2019-05-31T10:08:02.605+0300][15.867s][debug][gc] GC(12) Concurrent mode failure
+[2019-05-31T10:08:07.028+0300][20.290s][info ][gc] GC(12) Pause Full (Allocation Failure) 1893M->1840M(2014M) 5752.196ms
+[2019-05-31T10:08:07.028+0300][20.290s][info ][gc] GC(11) Pause Young (Allocation Failure) 1893M->1840M(2014M) 5752.266ms
+[2019-05-31T10:08:12.081+0300][25.343s][info ][gc] GC(13) Pause Full (Allocation Failure) 2014M->1970M(2014M) 4753.221ms
+[2019-05-31T10:08:12.275+0300][25.537s][info ][gc] GC(14) Pause Initial Mark 1975M->1975M(2014M) 193.494ms
+[2019-05-31T10:08:12.275+0300][25.537s][info ][gc] GC(14) Concurrent Mark
+[2019-05-31T10:08:13.772+0300][27.035s][debug][gc] GC(14) Concurrent active time: 1.497ms
+[2019-05-31T10:08:13.773+0300][27.035s][info ][gc] GC(14) Concurrent Mark 1497.648ms
+[2019-05-31T10:08:13.773+0300][27.035s][debug][gc] GC(15) Concurrent mode failure
+[2019-05-31T10:08:18.620+0300][31.882s][info ][gc] GC(15) Pause Full (Allocation Failure) 2014M->2003M(2014M) 6072.718ms
+[2019-05-31T10:08:23.547+0300][36.810s][info ][gc] GC(16) Pause Full (Allocation Failure) 2014M->2011M(2014M) 4839.289ms
+[2019-05-31T10:08:23.749+0300][37.012s][info ][gc] GC(17) Pause Initial Mark 2011M->2011M(2014M) 202.096ms
+[2019-05-31T10:08:23.749+0300][37.012s][info ][gc] GC(17) Concurrent Mark
+[2019-05-31T10:08:25.353+0300][38.616s][debug][gc] GC(17) Concurrent active time: 1.604ms
+[2019-05-31T10:08:25.353+0300][38.616s][info ][gc] GC(17) Concurrent Mark 1603.936ms
+[2019-05-31T10:08:25.353+0300][38.616s][debug][gc] GC(18) Concurrent mode failure
+[2019-05-31T10:08:30.170+0300][43.434s][info ][gc] GC(18) Pause Full (Allocation Failure) 2014M->2014M(2014M) 6398.220ms
+[2019-05-31T10:08:35.002+0300][48.266s][info ][gc] GC(19) Pause Full (Allocation Failure) 2014M->2014M(2014M) 4826.415ms
+[2019-05-31T10:08:35.204+0300][48.467s][info ][gc] GC(20) Pause Initial Mark 2014M->2014M(2014M) 201.286ms
+[2019-05-31T10:08:35.204+0300][48.467s][info ][gc] GC(20) Concurrent Mark
+[2019-05-31T10:08:36.797+0300][50.061s][debug][gc] GC(20) Concurrent active time: 1.594ms
+[2019-05-31T10:08:36.798+0300][50.061s][info ][gc] GC(20) Concurrent Mark 1593.831ms
+[2019-05-31T10:08:36.798+0300][50.061s][debug][gc] GC(21) Concurrent mode failure
+[2019-05-31T10:08:41.632+0300][54.895s][info ][gc] GC(21) Pause Full (Allocation Failure) 2014M->2014M(2014M) 6425.903ms
+[2019-05-31T10:08:45.497+0300][58.761s][info ][gc] GC(22) Pause Full (Allocation Failure) 2014M->2014M(2014M) 3865.003ms
+[2019-05-31T10:08:49.343+0300][62.607s][info ][gc] GC(24) Pause Full (Allocation Failure) 2014M->2014M(2014M) 3846.185ms
+[2019-05-31T10:08:53.179+0300][66.443s][info ][gc] GC(25) Pause Full (Allocation Failure) 2014M->2014M(2014M) 3835.696ms
+[2019-05-31T10:08:53.382+0300][66.646s][info ][gc] GC(23) Pause Initial Mark 2014M->2014M(2014M) 202.456ms
+[2019-05-31T10:08:53.382+0300][66.646s][info ][gc] GC(23) Concurrent Mark
+[2019-05-31T10:08:54.981+0300][68.246s][debug][gc] GC(23) Concurrent active time: 1.600ms
+[2019-05-31T10:08:54.981+0300][68.246s][info ][gc] GC(23) Concurrent Mark 1599.686ms
+[2019-05-31T10:08:54.981+0300][68.246s][debug][gc] GC(26) Concurrent mode failure
+[2019-05-31T10:08:55.744+0300][69.009s][info ][gc] GC(26) Pause Full (Allocation Failure) 2014M->1M(2014M) 2362.345ms
