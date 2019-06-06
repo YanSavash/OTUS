@@ -23,7 +23,7 @@ public class Cell {
         this.type = type;
     }
 
-    public int Amount(){
+    public int Quantity(){
         return amount*type.getCount();
     }
 }

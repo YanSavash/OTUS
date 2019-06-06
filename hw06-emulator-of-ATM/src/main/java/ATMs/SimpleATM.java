@@ -51,7 +51,7 @@ public class SimpleATM extends AbstractATM {
     public void showBalance() {
         var sum = 0;
         for (Cell i : cells)
-            sum += (i.Amount());
+            sum += (i.Quantity());
         System.out.println(sum);
     }
 }
