@@ -1,3 +1,5 @@
+package Enums;
+
 public enum BankNote {
     TEN(10),
     FIFTY(50),

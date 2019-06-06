@@ -1,6 +1,10 @@
-class Cell {
+package Entity;
+
+import Enums.BankNote;
+
+public class Cell {
     private int amount;
-    private BankNote type;
+    private final BankNote type;
 
     public int getAmount() {
         return amount;
@@ -14,12 +18,12 @@ class Cell {
         return type;
     }
 
-    Cell(int amount, BankNote type) {
+    public Cell(int amount, BankNote type) {
         this.amount = amount;
         this.type = type;
     }
 
-    public int Sum(){
+    public int Amount(){
         return amount*type.getCount();
     }
 }

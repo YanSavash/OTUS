@@ -1,8 +1,13 @@
+package ATMs;
+
+import Entity.Cell;
+import Enums.BankNote;
 import java.util.ArrayList;
+import java.util.List;
 
-public class SimpleATM extends ATM {
+public class SimpleATM extends AbstractATM {
 
-    private ArrayList<Cell> cells = new ArrayList<>();
+    private static final List<Cell> cells = new ArrayList<>();
 
     public SimpleATM(int amount) {
         ArrayList<BankNote> bankNotes = new ArrayList<>();
@@ -20,17 +25,12 @@ public class SimpleATM extends ATM {
     }
 
     @Override
-    public void receiveBankNote(int amount) {          //здесь вносится сумма, а не отдельные банкноты, думаю так лучше
-        System.out.println("Попытка внести " + amount);//писать метод ввода одной купюры(Cell) слишком просто
-        if (amount % 10 != 0) {
-            System.out.println("Запрошенную сумму нельзя внести");
-            return;
-        }
-        for (Cell i : cells)
-            while (i.getType().getCount() <= amount) {
-                i.setAmount(i.getAmount() + 1);
-                amount -= i.getType().getCount();
-            }
+    public void receiveBankNote(ArrayList<Cell> pack) {
+        System.out.println("Попытка внести банкноты " + pack.size() + " номиналов");
+        for (Cell p : pack)
+            for (Cell i : cells)
+                if (i.getType().equals(p.getType()))
+                    i.setAmount(i.getAmount() + p.getAmount());
     }
 
     @Override
@@ -51,7 +51,7 @@ public class SimpleATM extends ATM {
     public void showBalance() {
         var sum = 0;
         for (Cell i : cells)
-            sum += (i.Sum());
+            sum += (i.Amount());
         System.out.println(sum);
     }
 }
