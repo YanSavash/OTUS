@@ -1,6 +1,6 @@
-package Entity;
+package entity;
 
-import Enums.BankNote;
+import enums.BankNote;
 
 public class Cell {
     private int amount;
@@ -23,7 +23,7 @@ public class Cell {
         this.type = type;
     }
 
-    public int Quantity(){
+    public int getCommonQuantity(){
         return amount*type.getCount();
     }
 }

@@ -1,13 +1,13 @@
-package ATMs;
+package atms;
 
-import Entity.Cell;
-import Enums.BankNote;
-import java.util.ArrayList;
-import java.util.List;
+import entity.ATMInterface;
+import entity.Cell;
+import enums.BankNote;
+import java.util.*;
 
-public class SimpleATM extends AbstractATM {
+public class SimpleATM implements ATMInterface {
 
-    private static final List<Cell> cells = new ArrayList<>();
+    private final Map<BankNote, Cell> cells = new HashMap();
 
     public SimpleATM(int amount) {
         ArrayList<BankNote> bankNotes = new ArrayList<>();
@@ -20,17 +20,16 @@ public class SimpleATM extends AbstractATM {
         bankNotes.add(BankNote.FIFTY);
         bankNotes.add(BankNote.TEN);
         for (BankNote i : bankNotes) {
-            cells.add(new Cell(amount, i));
+            cells.put(i, new Cell(amount, i));
         }
     }
 
     @Override
-    public void receiveBankNote(ArrayList<Cell> pack) {
+    public void receiveBankNote(Map<BankNote, Cell> pack) {
         System.out.println("Попытка внести банкноты " + pack.size() + " номиналов");
-        for (Cell p : pack)
-            for (Cell i : cells)
-                if (i.getType().equals(p.getType()))
-                    i.setAmount(i.getAmount() + p.getAmount());
+        for (Map.Entry<BankNote, Cell> i : cells.entrySet())
+            if (pack.containsKey(i.getKey()))
+                i.getValue().setAmount(i.getValue().getAmount() + pack.get(i.getKey()).getAmount());
     }
 
     @Override
@@ -40,18 +39,18 @@ public class SimpleATM extends AbstractATM {
             System.out.println("Запрошенную сумму нельзя выдать");
             return;
         }
-        for (Cell i : cells)
-            while (i.getType().getCount() <= amount) {
-                i.setAmount(i.getAmount() - 1);
-                amount -= i.getType().getCount();
+        for (Map.Entry<BankNote, Cell> i : cells.entrySet())
+            while (i.getValue().getType().getCount() <= amount && i.getValue().getType().getCount() > 0) {
+                i.getValue().setAmount(i.getValue().getAmount() - 1);
+                amount -= i.getValue().getType().getCount();
             }
     }
 
     @Override
     public void showBalance() {
         var sum = 0;
-        for (Cell i : cells)
-            sum += (i.Quantity());
+        for (Map.Entry<BankNote, Cell> i : cells.entrySet())
+            sum += (i.getValue().getCommonQuantity());
         System.out.println(sum);
     }
 }
