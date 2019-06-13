@@ -4,15 +4,12 @@ import ru.netrax.entity.Cell;
 import ru.netrax.entity.DollarCell;
 import ru.netrax.bridge.PaymentSystem;
 import ru.netrax.enums.Dollar;
-import ru.netrax.memento.Memento;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 public class DollarATM extends ATM {
     private final Map<Dollar, DollarCell> cells = new HashMap();
-    private byte[] state;
 
     public DollarATM(int amount, PaymentSystem paymentSystem) {
         super(paymentSystem);
@@ -60,35 +57,5 @@ public class DollarATM extends ATM {
         for (Map.Entry<Dollar, DollarCell> i : cells.entrySet())
             sum += (i.getValue().getCommonQuantity());
         return sum;
-    }
-
-    @Override
-    public byte[] getState() {
-        return state;
-    }
-
-    @Override
-    public void setState(String state) {
-        this.state = state.getBytes();
-    }
-
-    @Override
-    public Memento save() {
-        return new Memento(state);
-    }
-
-    @Override
-    public void restore(Memento memento) {
-        this.state = memento.getState();
-    }
-
-    @Override
-    public int getCommonBalance() {
-        return showBalance() * 64;
-    }
-
-    @Override
-    public String toString() {
-        return new String(state);
     }
 }

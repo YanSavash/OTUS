@@ -4,15 +4,12 @@ import ru.netrax.entity.Cell;
 import ru.netrax.entity.PoundCell;
 import ru.netrax.bridge.PaymentSystem;
 import ru.netrax.enums.Pound;
-import ru.netrax.memento.Memento;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 public class PoundATM extends ATM {
     private final Map<Pound, PoundCell> cells = new HashMap();
-    private byte[] state;
 
     public PoundATM(int amount, PaymentSystem paymentSystem) {
         super(paymentSystem);
@@ -60,35 +57,5 @@ public class PoundATM extends ATM {
         for (Map.Entry<Pound, PoundCell> i : cells.entrySet())
             sum += (i.getValue().getCommonQuantity());
         return sum;
-    }
-
-    @Override
-    public byte[] getState() {
-        return state;
-    }
-
-    @Override
-    public void setState(String state) {
-        this.state = state.getBytes();
-    }
-
-    @Override
-    public Memento save() {
-        return new Memento(state);
-    }
-
-    @Override
-    public void restore(Memento memento) {
-        this.state = memento.getState();
-    }
-
-    @Override
-    public int getCommonBalance() {
-        return showBalance() * 82;
-    }
-
-    @Override
-    public String toString() {
-        return new String(state);
     }
 }

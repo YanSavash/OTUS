@@ -4,15 +4,12 @@ import ru.netrax.entity.Cell;
 import ru.netrax.entity.RubleCell;
 import ru.netrax.bridge.PaymentSystem;
 import ru.netrax.enums.Ruble;
-import ru.netrax.memento.Memento;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 public class RubleATM extends ATM {
     private final Map<Ruble, RubleCell> cells = new HashMap();
-    private byte[] state;
 
     public RubleATM(int amount, PaymentSystem paymentSystem) {
         super(paymentSystem);
@@ -60,35 +57,5 @@ public class RubleATM extends ATM {
         for (Map.Entry<Ruble, RubleCell> i : cells.entrySet())
             sum += (i.getValue().getCommonQuantity());
         return sum;
-    }
-
-    @Override
-    public byte[] getState() {
-        return state;
-    }
-
-    @Override
-    public void setState(String state) {
-        this.state = state.getBytes();
-    }
-
-    @Override
-    public Memento save() {
-        return new Memento(state);
-    }
-
-    @Override
-    public void restore(Memento memento) {
-        this.state = memento.getState();
-    }
-
-    @Override
-    public int getCommonBalance() {
-        return showBalance();
-    }
-
-    @Override
-    public String toString() {
-        return new String(state);
     }
 }

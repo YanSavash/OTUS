@@ -10,7 +10,6 @@ import ru.netrax.atms.RubleATM;
 import ru.netrax.entity.Cell;
 import ru.netrax.entity.PoundCell;
 import ru.netrax.enums.Pound;
-
 import java.util.HashMap;
 import java.util.Map;
 
