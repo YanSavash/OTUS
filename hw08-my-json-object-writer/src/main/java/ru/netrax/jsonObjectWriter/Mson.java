@@ -18,7 +18,6 @@ public class Mson {
             field.setAccessible(true);
 
 
-
             if (fieldType.isPrimitive()) {
                 System.out.println("PRIMITIVE");
                 jsonCreated.add(field.getName(), field.get(obj).toString());
@@ -43,7 +42,10 @@ public class Mson {
             }
             if (!fieldType.isPrimitive() && !fieldType.isArray()) {
                 System.out.println("OBJECT");
-                jsonCreated.add(field.getName(), toJson(field.get(obj)));
+                if (obj.getClass().getDeclaredFields().length == 0)
+                    jsonCreated.add(field.getName(), "");
+                else
+                    jsonCreated.add(field.getName(), toJson(field.get(obj)));
                 continue;
             }
 

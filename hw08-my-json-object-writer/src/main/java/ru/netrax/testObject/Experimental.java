@@ -8,7 +8,7 @@ public class Experimental {
     private final char symbol;
     private final int[] numbers;
     private final char[] symbols;
-//    private final Object object;
+    private final Object object;
 //    private final Object[] objects;
 //    private final List<String> list = new ArrayList<>(){{
 //        add("Hello world");
@@ -29,7 +29,7 @@ public class Experimental {
         this.symbol = symbol;
         this.numbers = new int[]{1,2,3,4,5,6,7,8,9,10};
         this.symbols = new char[]{'t','r','s','a','z'};
-//        this.object = object;
+        this.object = object;
 //        this.objects = new Object[]{object,object,object};
     }
 
@@ -41,8 +41,8 @@ public class Experimental {
         return number == that.number &&
                 symbol == that.symbol &&
                 Arrays.equals(numbers, that.numbers) &&
-                Arrays.equals(symbols, that.symbols);// &&
-//                Objects.equals(object, that.object) &&
+                Arrays.equals(symbols, that.symbols) &&
+                Objects.equals(object, that.object);// &&
 //                Arrays.equals(objects, that.objects); //&&
 //                Objects.equals(list, that.list) &&
 //                Objects.equals(set, that.set) &&
@@ -51,7 +51,7 @@ public class Experimental {
 
     @Override
     public int hashCode() {
-        int result = Objects.hash(number, symbol);//, object); //, list, set, map);
+        int result = Objects.hash(number, symbol, object); //, list, set, map);
         result = 31 * result + Arrays.hashCode(numbers);
         result = 31 * result + Arrays.hashCode(symbols);
   //      result = 31 * result + Arrays.hashCode(objects);
