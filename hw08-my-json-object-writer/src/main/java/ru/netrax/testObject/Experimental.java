@@ -42,19 +42,14 @@ public class Experimental {
                 symbol == that.symbol &&
                 Arrays.equals(numbers, that.numbers) &&
                 Arrays.equals(symbols, that.symbols) &&
-                Objects.equals(object, that.object);// &&
-//                Arrays.equals(objects, that.objects); //&&
-//                Objects.equals(list, that.list) &&
-//                Objects.equals(set, that.set) &&
-//                Objects.equals(map, that.map);
+                Objects.equals(object, that.object);
     }
 
     @Override
     public int hashCode() {
-        int result = Objects.hash(number, symbol, object); //, list, set, map);
+        int result = Objects.hash(number, symbol, object);
         result = 31 * result + Arrays.hashCode(numbers);
         result = 31 * result + Arrays.hashCode(symbols);
-  //      result = 31 * result + Arrays.hashCode(objects);
         return result;
     }
 }

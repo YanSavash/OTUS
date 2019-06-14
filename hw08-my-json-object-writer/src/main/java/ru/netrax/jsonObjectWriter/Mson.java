@@ -42,8 +42,9 @@ public class Mson {
             }
             if (!fieldType.isPrimitive() && !fieldType.isArray()) {
                 System.out.println("OBJECT");
-                if (obj.getClass().getDeclaredFields().length == 0)
-                    jsonCreated.add(field.getName(), "");
+                Class field1 =field.get(obj).getClass().getSuperclass();
+                if (field1 == null)
+                    jsonCreated.add(field.getName(),Json.createObjectBuilder().build());
                 else
                     jsonCreated.add(field.getName(), toJson(field.get(obj)));
                 continue;
