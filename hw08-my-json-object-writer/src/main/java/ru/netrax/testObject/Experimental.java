@@ -8,29 +8,38 @@ public class Experimental {
     private final char symbol;
     private final int[] numbers;
     private final char[] symbols;
-    private final Object object;
-//    private final Object[] objects;
-//    private final List<String> list = new ArrayList<>(){{
-//        add("Hello world");
-//        add("Nice world");
-//        add("Beatiful world");
-//    }};;
-//    private final Set<Integer> set = new HashSet<>(){{
-//        add(5);
-//        add(6);
-//        add(7);
-//    }};;
-//    private final Map<List,Set> map = new HashMap<>(){{
-//        put(list,set);
+    private MyObject myObject;
+    private MyObject[] myObjects;
+
+
+    private final List<String> list = new ArrayList<>() {{
+        add("Hello world");
+        add("Nice world");
+        add("Beatiful world");
+    }};
+
+    private final Set<Integer> set = new HashSet<>() {{
+        add(5);
+        add(6);
+        add(7);
+    }};
+
+//    private final Map<List, Set> map = new HashMap<>() {{
+//        put(list, set);
 //    }};
 
-    public Experimental(int number, char symbol, Object object) {
-        this.number = number;
-        this.symbol = symbol;
-        this.numbers = new int[]{1,2,3,4,5,6,7,8,9,10};
-        this.symbols = new char[]{'t','r','s','a','z'};
-        this.object = object;
-//        this.objects = new Object[]{object,object,object};
+    @Override
+    public String toString() {
+        return "Experimental{" +
+                "number=" + number +
+                ", symbol=" + symbol +
+                ", numbers=" + Arrays.toString(numbers) +
+                ", symbols=" + Arrays.toString(symbols) +
+                ", myObject=" + myObject +
+                ", myObjects=" + Arrays.toString(myObjects) +
+                ", list=" + list +
+                ", set=" + set +
+                '}';
     }
 
     @Override
@@ -42,14 +51,28 @@ public class Experimental {
                 symbol == that.symbol &&
                 Arrays.equals(numbers, that.numbers) &&
                 Arrays.equals(symbols, that.symbols) &&
-                Objects.equals(object, that.object);
+                Objects.equals(myObject, that.myObject) &&
+                Arrays.equals(myObjects, that.myObjects) &&
+                Objects.equals(list, that.list) &&
+                Objects.equals(set, that.set);
     }
 
     @Override
     public int hashCode() {
-        int result = Objects.hash(number, symbol, object);
+        int result = Objects.hash(number, symbol, myObject, list, set);
         result = 31 * result + Arrays.hashCode(numbers);
         result = 31 * result + Arrays.hashCode(symbols);
+        result = 31 * result + Arrays.hashCode(myObjects);
         return result;
     }
+
+    public Experimental(int number, char symbol, MyObject object) {
+        this.number = number;
+        this.symbol = symbol;
+        this.numbers = new int[]{1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
+        this.symbols = new char[]{'t', 'r', 's', 'a', 'z'};
+        this.myObject = object;
+        this.myObjects = new MyObject[]{object, object, object};
+    }
+
 }
