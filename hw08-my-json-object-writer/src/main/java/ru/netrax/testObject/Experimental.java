@@ -24,10 +24,6 @@ public class Experimental {
         add(7);
     }};
 
-//    private final Map<List, Set> map = new HashMap<>() {{
-//        put(list, set);
-//    }};
-
     @Override
     public String toString() {
         return "Experimental{" +
