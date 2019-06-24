@@ -22,6 +22,7 @@
         <module>hw05-testing-different-gc</module>
         <module>hw06-emulator-of-ATM</module>
         <module>hw07-department-of-ATM</module>
+        <module>hw08-my-json-object-writer</module>
     </modules>
 
     <properties>
