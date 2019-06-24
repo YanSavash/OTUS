@@ -10,19 +10,7 @@ public class Experimental {
     private final char[] symbols;
     private MyObject myObject;
     private MyObject[] myObjects;
-
-
-    private final List<String> list = new ArrayList<>() {{
-        add("Hello world");
-        add("Nice world");
-        add("Beatiful world");
-    }};
-
-    private final Set<Integer> set = new HashSet<>() {{
-        add(5);
-        add(6);
-        add(7);
-    }};
+    private String nullString = null;
 
     @Override
     public String toString() {
@@ -33,6 +21,7 @@ public class Experimental {
                 ", symbols=" + Arrays.toString(symbols) +
                 ", myObject=" + myObject +
                 ", myObjects=" + Arrays.toString(myObjects) +
+                ", nullString='" + nullString + '\'' +
                 ", list=" + list +
                 ", set=" + set +
                 '}';
@@ -49,18 +38,31 @@ public class Experimental {
                 Arrays.equals(symbols, that.symbols) &&
                 Objects.equals(myObject, that.myObject) &&
                 Arrays.equals(myObjects, that.myObjects) &&
+                Objects.equals(nullString, that.nullString) &&
                 Objects.equals(list, that.list) &&
                 Objects.equals(set, that.set);
     }
 
     @Override
     public int hashCode() {
-        int result = Objects.hash(number, symbol, myObject, list, set);
+        int result = Objects.hash(number, symbol, myObject, nullString, list, set);
         result = 31 * result + Arrays.hashCode(numbers);
         result = 31 * result + Arrays.hashCode(symbols);
         result = 31 * result + Arrays.hashCode(myObjects);
         return result;
     }
+
+    private final List<String> list = new ArrayList<>() {{
+        add("Hello world");
+        add("Nice world");
+        add("Beatiful world");
+    }};
+
+    private final Set<Integer> set = new HashSet<>() {{
+        add(5);
+        add(6);
+        add(7);
+    }};
 
     public Experimental(int number, char symbol, MyObject object) {
         this.number = number;

@@ -10,34 +10,27 @@ public class Mson {
         System.out.println();
         if (obj != null) {
             if (obj.getClass().equals(Integer.class)) {
-                return ((Integer) obj).toString();
+                return toJsonValue(obj).toString();
             } else if (obj.getClass().equals(Boolean.class)) {
-                return ((Boolean) obj).toString();
+                return toJsonValue(obj).toString();
             } else if (obj.getClass().equals(Double.class)) {
-                return ((Double) obj).toString();
+                return toJsonValue(obj).toString();
             } else if (obj.getClass().equals(Float.class)) {
-                return ((Float) obj).toString();
+                return toJsonValue(obj).toString();
             } else if (obj.getClass().equals(String.class)) {
                 return obj.toString();
             } else if (obj.getClass().equals(Character.class)) {
                 return String.valueOf(obj);
             } else if (obj.getClass().equals(Long.class)) {
-                return ((Long) obj).toString();
+                return toJsonValue(obj).toString();
             } else if (obj.getClass().equals(Byte.class)) {
-                return ((Byte) obj).toString();
+                return toJsonValue(obj).toString();
             } else if (obj.getClass().equals(Short.class)) {
-                return ((Short) obj).toString();
+                return toJsonValue(obj).toString();
             } else if (obj.getClass().isArray()) {
-                JsonArrayBuilder arr = Json.createArrayBuilder();
-                int length = Array.getLength(obj);
-                for (int i = 0; i < length; i++)
-                    arr.add(toJsonValue(Array.get(obj, i)));
-                JsonArray jsonArray = arr.build();
-                return jsonArray.toString();
+                return toJsonValue(obj).toString();
             } else if (obj instanceof Collection) {
-                JsonArrayBuilder arr = Json.createArrayBuilder((Collection) obj);
-                JsonArray jsonArray = arr.build();
-                return jsonArray.toString();
+                return toJsonValue(obj).toString();
             }
             JsonObjectBuilder builder = getAround(obj);
             JsonObject buildObject = builder.build();
@@ -46,7 +39,9 @@ public class Mson {
     }
 
     private static JsonValue toJsonValue(Object value) throws IllegalAccessException {
-        if (value instanceof Integer) {
+        if (value == null || value == "") {
+            return JsonValue.NULL;
+        } else if (value instanceof Integer) {
             JsonNumber jsonNumber = Json.createValue((Integer) value);
             return (JsonValue) jsonNumber;
         } else if (value instanceof String) {
@@ -72,8 +67,16 @@ public class Mson {
         } else if (value instanceof Short) {
             JsonNumber jsonNumber = Json.createValue((Short) value);
             return (JsonValue) jsonNumber;
-        } else if (value instanceof JsonArrayBuilder) {
-            JsonArray jsonArray = ((JsonArrayBuilder) value).build();
+        } else if (value.getClass().isArray()) {
+            JsonArrayBuilder arr = Json.createArrayBuilder();
+            int length = Array.getLength(value);
+            for (int i = 0; i < length; i++)
+                arr.add(toJsonValue(Array.get(value, i)));
+            JsonArray jsonArray = arr.build();
+            return (JsonValue) jsonArray;
+        } else if (value instanceof Collection) {
+            JsonArrayBuilder arr = Json.createArrayBuilder((Collection) value);
+            JsonArray jsonArray = arr.build();
             return (JsonValue) jsonArray;
         } else if (value instanceof JsonObjectBuilder) {
             JsonObject jsonObject = ((JsonObjectBuilder) value).build();
@@ -96,12 +99,7 @@ public class Mson {
                 continue;
             }
             if (fieldType.isArray()) {
-                JsonArrayBuilder arr = Json.createArrayBuilder();
-                Object array = field.get(obj);
-                int length = Array.getLength(array);
-                for (int i = 0; i < length; i++)
-                    arr.add(toJsonValue(Array.get(array, i)));
-                builder.add(field.getName(), toJsonValue(arr));
+                builder.add(field.getName(), toJsonValue(field.get(obj)));
                 continue;
             }
             if (fieldType.getSimpleName().equals("String")) {
@@ -109,8 +107,7 @@ public class Mson {
                 continue;
             }
             if (field.get(obj) instanceof Collection) {
-                JsonArrayBuilder arr = Json.createArrayBuilder((Collection) field.get(obj));
-                builder.add(field.getName(), toJsonValue(arr));
+                builder.add(field.getName(), toJsonValue(field.get(obj)));
                 continue;
             }
             JsonObjectBuilder builderInner = getAround(field.get(obj));
