@@ -4,9 +4,9 @@ import ru.netrax.annotation.Key;
 
 public class User {
     @Key
-    private final int id;
-    private final String name;
-    private final int age;
+    private int id;
+    private String name;
+    private int age;
 
     @Override
     public String toString() {
@@ -15,6 +15,18 @@ public class User {
                 ", name='" + name + '\'' +
                 ", age=" + age +
                 '}';
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
     }
 
     public int getId() {
@@ -34,4 +46,6 @@ public class User {
         this.name = name;
         this.age = age;
     }
+
+    public User(){}
 }

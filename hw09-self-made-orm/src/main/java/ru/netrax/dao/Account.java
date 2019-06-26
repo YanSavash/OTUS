@@ -4,13 +4,10 @@ import ru.netrax.annotation.Key;
 
 public class Account {
     @Key
-    private final int no;
-    private final String type;
-    private final int rest;
+    private int no;
+    private String type;
+    private int rest;
 
-    /*• no bigint(20) NOT NULL auto_increment
-    • type varchar(255)
-    • rest number*/
 
     @Override
     public String toString() {
@@ -19,6 +16,18 @@ public class Account {
                 ", type='" + type + '\'' +
                 ", rest=" + rest +
                 '}';
+    }
+
+    public void setNo(int no) {
+        this.no = no;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public void setRest(int rest) {
+        this.rest = rest;
     }
 
     public int getNo() {
@@ -38,4 +47,6 @@ public class Account {
         this.type = type;
         this.rest = rest;
     }
+
+    public Account(){}
 }
