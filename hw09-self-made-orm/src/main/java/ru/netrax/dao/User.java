@@ -4,7 +4,7 @@ import ru.netrax.annotation.Key;
 
 public class User {
     @Key
-    private int id;
+    private long id;
     private String name;
     private int age;
 
@@ -29,7 +29,7 @@ public class User {
         this.age = age;
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 

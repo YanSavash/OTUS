@@ -2,11 +2,13 @@ package ru.netrax.dao;
 
 import ru.netrax.annotation.Key;
 
+import java.math.BigDecimal;
+
 public class Account {
     @Key
-    private int no;
+    private long no;
     private String type;
-    private int rest;
+    private BigDecimal rest;
 
 
     @Override
@@ -26,11 +28,11 @@ public class Account {
         this.type = type;
     }
 
-    public void setRest(int rest) {
+    public void setRest(BigDecimal rest) {
         this.rest = rest;
     }
 
-    public int getNo() {
+    public long getNo() {
         return no;
     }
 
@@ -38,11 +40,11 @@ public class Account {
         return type;
     }
 
-    public int getRest() {
+    public BigDecimal getRest() {
         return rest;
     }
 
-    public Account(int no, String type, int rest) {
+    public Account(int no, String type, BigDecimal rest) {
         this.no = no;
         this.type = type;
         this.rest = rest;
