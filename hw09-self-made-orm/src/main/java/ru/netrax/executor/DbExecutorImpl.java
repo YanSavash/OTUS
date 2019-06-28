@@ -9,22 +9,37 @@ import static ru.netrax.helpers.ReflectionHelper.*;
 
 public class DbExecutorImpl<T> implements DbExecutor<T> {
     private final Connection connection;
+    private final Class<T> clazz;
+    private Field[] fields;
+    private Field keyFiled;
+    private String createSql;
+    private String updateSql;
+    private String selectSql;
 
-    public DbExecutorImpl(Connection connection) {
+    public DbExecutorImpl(Connection connection, Class<T> clazz){
         this.connection = connection;
+        this.clazz = clazz;
+        getReflectionParameters();
+    }
+
+    private void getReflectionParameters(){
+        fields = getObjectFields(clazz);
+        keyFiled = getKeyFieldName(fields);
+        createSql = createSqlCreate(clazz, fields);
+        updateSql = createSqlUpdate(clazz, fields, keyFiled);
+        selectSql = createSqlSelect(clazz, keyFiled);
     }
 
     @Override
     public void create(T objectData) throws SQLException, IllegalAccessException {
-        Savepoint savePoint = this.connection.setSavepoint("savePointName");
-        Field[] fields = getObjectFields(objectData);
-        if (getStringKey(objectData) != null) {
-            try (PreparedStatement pst = connection.prepareStatement(createSqlCreate(objectData), Statement.RETURN_GENERATED_KEYS)) {
+        Savepoint savePoint = connection.setSavepoint("savePointName");
+        if (keyFiled.getName() != null) {
+            try (PreparedStatement pst = connection.prepareStatement(createSql, Statement.RETURN_GENERATED_KEYS)) {
                 for (int i = 1; i < fields.length; i++)
                     pst.setObject(i, fields[i].get(objectData));
                 pst.executeUpdate();
             } catch (SQLException ex) {
-                this.connection.rollback(savePoint);
+                connection.rollback(savePoint);
                 System.out.println(ex.getMessage());
                 throw ex;
             }
@@ -33,15 +48,14 @@ public class DbExecutorImpl<T> implements DbExecutor<T> {
 
     @Override
     public void update(T objectData) throws SQLException, IllegalAccessException {
-        Savepoint savePoint = this.connection.setSavepoint("savePointName");
-        Field[] fields = getObjectFields(objectData);
-        try (PreparedStatement stat = this.connection.prepareStatement(createSqlUpdate(objectData))) {
+        Savepoint savePoint = connection.setSavepoint("savePointName");
+        try (PreparedStatement stat = connection.prepareStatement(updateSql)) {
             for (int i = 1; i < fields.length; i++)
                 stat.setObject(i, fields[i].get(objectData));
-            stat.setLong(fields.length, getIntegerKey(objectData));
+            stat.setLong(fields.length, (long) keyFiled.get(objectData));
             stat.executeUpdate();
         } catch (SQLException ex) {
-            this.connection.rollback(savePoint);
+            connection.rollback(savePoint);
             System.out.println(ex.getMessage());
             throw ex;
         }
@@ -49,19 +63,18 @@ public class DbExecutorImpl<T> implements DbExecutor<T> {
 
     @Override
     public <T> T load(long id, Class<T> clazz) throws SQLException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
-        Savepoint savePoint = this.connection.setSavepoint("savePointName");
-        T user = null;
-        try (PreparedStatement stat = this.connection.prepareStatement(createSqlSelect(clazz))) {
+        Savepoint savePoint = connection.setSavepoint("savePointName");
+        try (PreparedStatement stat = connection.prepareStatement(selectSql)) {
             stat.setLong(1, id);
             try (ResultSet rs = stat.executeQuery()) {
                 if (rs.next())
-                    user = setObjectFields(clazz, rs);
+                    return setObjectFields(clazz, rs, fields);
             }
         } catch (Exception ex) {
-            this.connection.rollback(savePoint);
+            connection.rollback(savePoint);
             System.out.println(ex.getMessage());
             throw ex;
         }
-        return user;
+        return null;
     }
 }

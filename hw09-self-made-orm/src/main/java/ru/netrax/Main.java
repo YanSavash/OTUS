@@ -30,7 +30,7 @@ public class Main {
         }
     }
 
-    public static void main(String[] args) throws SQLException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
+    public static void main(String[] args) throws SQLException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException, NoSuchFieldException {
         Main demo = new Main();
         Connection connection = demo.getConnection();
 
@@ -40,9 +40,9 @@ public class Main {
         User userCreate = new User(1, "name", 3);
         Account accountCreate = new Account(1, "Account test", new BigDecimal(50));
 
-        DbExecutor<User> executorUser = new DbExecutorImpl<>(connection);
+        DbExecutor<User> executorUser = new DbExecutorImpl<>(connection, User.class);
         executorUser.create(userCreate);
-        DbExecutor<Account> executorAccount = new DbExecutorImpl<>(connection);
+        DbExecutor<Account> executorAccount = new DbExecutorImpl<>(connection, Account.class);
         executorAccount.create(accountCreate);
 
         connection.commit();

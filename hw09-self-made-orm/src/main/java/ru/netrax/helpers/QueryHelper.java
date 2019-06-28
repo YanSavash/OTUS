@@ -1,17 +1,10 @@
 package ru.netrax.helpers;
 
-import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
-import java.util.Optional;
-
-import static ru.netrax.helpers.ReflectionHelper.getObjectFields;
-import static ru.netrax.helpers.ReflectionHelper.getStringKey;
 
 public class QueryHelper {
-    public static String createSqlCreate(Object obj) {
-        Field[] fields = getObjectFields(obj);
-        StringBuilder sqlCreate = new StringBuilder("insert into " + obj.getClass().getSimpleName() + "(");
+    public static <T> String createSqlCreate(Class<T> clazz, Field[] fields) {
+        StringBuilder sqlCreate = new StringBuilder("insert into " + clazz.getSimpleName() + "(");
         for (int i = 1; i < fields.length; i++)
             if (i < fields.length - 1)
                 sqlCreate.append(fields[i].getName()).append(",");
@@ -23,19 +16,16 @@ public class QueryHelper {
         return sqlCreate.toString();
     }
 
-    public static String createSqlUpdate(Object obj) throws IllegalAccessException {
-        Field[] fields = getObjectFields(obj);
-        StringBuilder sqlUpdate = new StringBuilder("update " + obj.getClass().getSimpleName() + " set ");
+    public static <T> String createSqlUpdate(Class<T> clazz, Field[] fields, Field keyField) {
+        StringBuilder sqlUpdate = new StringBuilder("update " + clazz.getSimpleName() + " set ");
         for (int i = 1; i < fields.length; i++)
             if (i < fields.length - 1)
                 sqlUpdate.append(fields[i].getName()).append(" = ?,");
-            else sqlUpdate.append(fields[i].getName()).append(" = ? where ").append(getStringKey(obj)).append(" = ?");
+            else sqlUpdate.append(fields[i].getName()).append(" = ? where ").append(keyField.getName()).append(" = ?");
         return sqlUpdate.toString();
     }
 
-    public static <T> String createSqlSelect(Class<T> clazz) throws IllegalAccessException, NoSuchMethodException, InvocationTargetException, InstantiationException {
-        Constructor<T> constructor = clazz.getConstructor();
-        Optional<T> obj = Optional.of(constructor.newInstance());
-        return "select * from " + obj.get().getClass().getSimpleName() + " where " + getStringKey(obj.get()) + " = ?";
+    public static <T> String createSqlSelect(Class<T> clazz, Field keyField) {
+        return "select * from " + clazz.getSimpleName() + " where " + keyField.getName() + " = ?";
     }
 }
