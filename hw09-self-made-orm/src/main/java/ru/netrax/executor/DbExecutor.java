@@ -8,5 +8,5 @@ public interface DbExecutor<T> {
 
     void update(T objectData) throws SQLException, IllegalAccessException;
 
-    <T> T load(long id, Class<T> clazz) throws SQLException, NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException;
+    <T> T load(long id) throws SQLException, NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException;
 }

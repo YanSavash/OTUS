@@ -54,8 +54,8 @@ public class Main {
 
         connection.commit();
 
-        User userResult = executorUser.load(1, User.class);
-        Account accountResult = executorAccount.load(1, Account.class);
+        User userResult = executorUser.load(1);
+        Account accountResult = executorAccount.load(1);
 
         System.out.println("created user:  " + userCreate);
         System.out.println("updated user:  " + userUpdate);
