@@ -23,6 +23,7 @@
         <module>hw06-emulator-of-ATM</module>
         <module>hw07-department-of-ATM</module>
         <module>hw08-my-json-object-writer</module>
+        <module>hw09-self-made-orm</module>
     </modules>
 
     <properties>
