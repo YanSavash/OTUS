@@ -66,13 +66,13 @@ public class DbExecutorImpl<T> implements DbExecutor<T> {
     }
 
     @Override
-    public <T> T load(long id) throws SQLException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
+    public T load(long id) throws SQLException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
         Savepoint savePoint = connection.setSavepoint("savePointName");
         try (PreparedStatement stat = connection.prepareStatement(selectSql)) {
             stat.setLong(1, id);
             try (ResultSet rs = stat.executeQuery()) {
                 if (rs.next())
-                    return (T) setObjectFields(clazz, rs, fields);
+                    return setObjectFields(clazz, rs, fields);
             }
         } catch (Exception ex) {
             connection.rollback(savePoint);

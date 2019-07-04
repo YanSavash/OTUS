@@ -24,6 +24,7 @@
         <module>hw07-department-of-ATM</module>
         <module>hw08-my-json-object-writer</module>
         <module>hw09-self-made-orm</module>
+        <module>hw10-hibernate</module>
     </modules>
 
     <properties>
