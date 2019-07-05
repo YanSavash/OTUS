@@ -1,13 +1,13 @@
 package ru.netrax.services;
 
 import ru.netrax.dao.UserDao;
-import ru.netrax.dao.UserDaoImp;
 import ru.netrax.models.User;
 
 public class DBService {
-    private UserDao usersDao = new UserDaoImp();
+    private UserDao usersDao;
 
-    public DBService() {
+    public DBService(UserDao usersDao) {
+        this.usersDao = usersDao;
     }
 
     public User findUser(long id) {

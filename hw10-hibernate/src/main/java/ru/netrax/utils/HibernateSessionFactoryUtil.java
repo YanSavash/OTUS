@@ -6,26 +6,22 @@ import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
-import ru.netrax.models.AddressDataSet;
-import ru.netrax.models.PhoneDataSet;
-import ru.netrax.models.User;
 
 public class HibernateSessionFactoryUtil {
     private static SessionFactory sessionFactory;
 
-    public static SessionFactory getSessionFactory() {
+    public static SessionFactory getSessionFactory(String configurationFile, Class<?>... t) {
         Configuration configuration = new Configuration()
-                .configure("hibernate.cfg.xml");
+                .configure(configurationFile);
 
         StandardServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder()
                 .applySettings(configuration.getProperties()).build();
 
-        Metadata metadata = new MetadataSources(serviceRegistry)
-                .addAnnotatedClass(User.class)
-                .addAnnotatedClass(PhoneDataSet.class)
-                .addAnnotatedClass(AddressDataSet.class)
-                .getMetadataBuilder()
-                .build();
+        MetadataSources metadataSources = new MetadataSources(serviceRegistry);
+        for (Class<?> i : t) {
+            metadataSources.addAnnotatedClass(i);
+        }
+        Metadata metadata = metadataSources.getMetadataBuilder().build();
 
         sessionFactory = metadata.getSessionFactoryBuilder().build();
         return sessionFactory;

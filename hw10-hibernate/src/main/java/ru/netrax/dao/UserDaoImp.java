@@ -4,22 +4,34 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import ru.netrax.models.User;
-import ru.netrax.utils.HibernateSessionFactoryUtil;
 
 public class UserDaoImp implements UserDao {
-    private static SessionFactory sessionFactory = HibernateSessionFactoryUtil.getSessionFactory();
+    private SessionFactory sessionFactory;
+
+    public UserDaoImp(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
+    }
 
     @Override
     public User findById(long id) {
-        return sessionFactory.openSession().get(User.class, id);
+        User user;
+        try (Session session = sessionFactory.openSession()) {
+            Transaction transaction = session.beginTransaction();
+            user = session.get(User.class, id);
+/*          Второй вариант
+            user.getAddressDataSet();
+            System.out.println(user.getPhoneDataSetList());*/
+            transaction.commit();
+        }
+        return user;
     }
 
     @Override
     public void save(User user) {
-        Session session = sessionFactory.openSession();
-        Transaction transaction = session.beginTransaction();
-        session.save(user);
-        transaction.commit();
-        session.close();
+        try (Session session = sessionFactory.openSession()) {
+            Transaction transaction = session.beginTransaction();
+            session.save(user);
+            transaction.commit();
+        }
     }
 }
