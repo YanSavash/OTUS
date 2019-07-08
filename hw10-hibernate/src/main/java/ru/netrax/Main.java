@@ -5,6 +5,7 @@ import ru.netrax.models.AddressDataSet;
 import ru.netrax.models.PhoneDataSet;
 import ru.netrax.models.User;
 import ru.netrax.services.DBService;
+import ru.netrax.services.DBServiceInterface;
 import ru.netrax.utils.HibernateSessionFactoryUtil;
 
 import java.util.ArrayList;
@@ -35,13 +36,9 @@ public class Main {
         user.setAge(25);
         user.setPhoneDataSetList(list);
 
-        DBService dbService = new DBService(new UserDaoImp(HibernateSessionFactoryUtil
+        DBServiceInterface<User> dbService = new DBService<>(new UserDaoImp(HibernateSessionFactoryUtil
                 .getSessionFactory("hibernate.cfg.xml", User.class, PhoneDataSet.class, AddressDataSet.class)));
         System.out.println(user);
-/*      Второй вариант
-        dbService.saveUser(user);
-        User l = dbService.findUser(1);
-        System.out.println(l);*/
         dbService.saveUser(user);
         System.out.println(dbService.findUser(1));
     }

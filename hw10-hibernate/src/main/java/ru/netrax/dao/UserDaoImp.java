@@ -18,9 +18,6 @@ public class UserDaoImp implements UserDao {
         try (Session session = sessionFactory.openSession()) {
             Transaction transaction = session.beginTransaction();
             user = session.get(User.class, id);
-/*          Второй вариант
-            user.getAddressDataSet();
-            System.out.println(user.getPhoneDataSetList());*/
             transaction.commit();
         }
         return user;
