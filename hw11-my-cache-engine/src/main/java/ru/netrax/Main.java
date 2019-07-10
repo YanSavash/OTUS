@@ -36,7 +36,7 @@ public class Main {
         user.setAge(25);
         user.setPhoneDataSetList(list);
 
-        DBServiceInterface<User> dbService = new DBService<>(new UserDaoImp(HibernateSessionFactoryUtil
+        DBServiceInterface dbService = new DBService(new UserDaoImp(HibernateSessionFactoryUtil
                 .getSessionFactory("hibernate.cfg.xml", User.class, PhoneDataSet.class, AddressDataSet.class)));
         System.out.println(user);
         dbService.saveUser(user);

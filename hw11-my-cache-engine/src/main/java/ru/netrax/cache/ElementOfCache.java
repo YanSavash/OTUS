@@ -1,16 +1,14 @@
 package ru.netrax.cache;
 
-import java.lang.ref.SoftReference;
-
 public class ElementOfCache<K,V> {
     private final K key;
-    private final SoftReference<V> value;
+    private final V value;
     private final long creationalTime;
     private long lastAccessTime;
 
     public ElementOfCache(K key,V value) {
         this.key = key;
-        this.value = new SoftReference<>(value);
+        this.value = value;
         creationalTime = getCurrentTime();
         lastAccessTime = getCurrentTime();
     }
@@ -24,7 +22,7 @@ public class ElementOfCache<K,V> {
     }
 
     public V getValue() {
-        return value.get();
+        return value;
     }
 
     public long getCreationalTime() {

@@ -4,22 +4,24 @@ import ru.netrax.cache.MyCache;
 import ru.netrax.dao.UserDao;
 import ru.netrax.models.User;
 
-public class DBService<T> implements DBServiceInterface<T> {
+public class DBService implements DBServiceInterface {
     private UserDao usersDao;
-    MyCache<Long, T> myCache = new MyCache<>(5, 0, 0, true);
+    private MyCache<Long, User> myCache = new MyCache<>(3, 0, 0, true);
 
     public DBService(UserDao usersDao) {
         this.usersDao = usersDao;
     }
 
-    public T findUser(long id) {
-        T str = myCache.get(id);
+    public User findUser(long id) {
+        User str = myCache.get(id);
+        if (str == null)
+            str = usersDao.findById(id);
         return str;
     }
 
-    public void saveUser(T user) {
-        usersDao.save((User) user);
-        myCache.put(((User) user).getId(), user);
+    public void saveUser(User user) {
+            usersDao.save((User) user);
+            myCache.put(user.getId(), user);
     }
 
     public void deleteUser(long id) {

@@ -1,10 +1,12 @@
 package ru.netrax.services;
 
-public interface DBServiceInterface<T> {
+import ru.netrax.models.User;
 
-    public T findUser(long id);
+public interface DBServiceInterface {
 
-    public void saveUser(T t);
+    public User findUser(long id);
+
+    public void saveUser(User t);
 
     public void deleteUser(long id);
 }

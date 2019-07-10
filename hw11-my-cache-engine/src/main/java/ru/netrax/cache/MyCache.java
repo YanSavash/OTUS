@@ -1,9 +1,7 @@
 package ru.netrax.cache;
 
-import java.util.LinkedHashMap;
-import java.util.Map;
-import java.util.Timer;
-import java.util.TimerTask;
+import java.lang.ref.SoftReference;
+import java.util.*;
 import java.util.function.Function;
 
 public class MyCache<K, V> implements Cache<K, V> {
@@ -14,7 +12,7 @@ public class MyCache<K, V> implements Cache<K, V> {
     private final long idleTimeMs;
     private final boolean isEternal;
 
-    private final Map<K, ElementOfCache<K, V>> elements = new LinkedHashMap<>();
+    private final Map<K, SoftReference<ElementOfCache<K, V>>> elements = new LinkedHashMap<>();
     private final Timer timer = new Timer();
 
     private int hit = 0;
@@ -30,11 +28,23 @@ public class MyCache<K, V> implements Cache<K, V> {
     @Override
     public void put(K key, V value) {
         if (elements.size() == maxElements) {
-            K firstKey = elements.keySet().iterator().next();
-            elements.remove(firstKey);
+            //как-то так проверил на самого бесполезного, но это жесть какая-то
+            //обязательно ли использовать столько проверок на null?
+            //может есть смысл использовать здесь Optional? но тогда сильно усложнится весь остальной функционал,
+            //потому что его придёться использовать везде
+            K foolKey = elements.keySet().iterator().next();
+            long time = Objects.requireNonNull(elements.get(foolKey).get()).getLastAccessTime();
+            for (Map.Entry<K, SoftReference<ElementOfCache<K, V>>> entry : elements.entrySet()) {
+                if (entry.getValue() != null)
+                    if (entry.getValue().get() != null)
+                        if (time > Objects.requireNonNull(entry.getValue().get()).getLastAccessTime()) {
+                            time = Objects.requireNonNull(entry.getValue().get()).getLastAccessTime();
+                            foolKey = entry.getKey();
+                        }
+            }
+            elements.remove(foolKey);
         }
-
-        elements.put(key, new ElementOfCache<K, V>(key, value));
+        elements.put(key, new SoftReference<>(new ElementOfCache<>(key, value)));
 
         if (!isEternal) {
             if (lifeTimeMs != 0) {
@@ -49,14 +59,15 @@ public class MyCache<K, V> implements Cache<K, V> {
     }
 
     public void dispose() {
-        timer.cancel();
+        if (elements.size() == 0)
+            timer.cancel();
     }
 
     private TimerTask getTimerTask(final K key, Function<ElementOfCache<K, V>, Long> timeFunction) {
         return new TimerTask() {
             @Override
             public void run() {
-                ElementOfCache<K, V> element = elements.get(key);
+                ElementOfCache<K, V> element = elements.get(key).get();
                 if (element == null || isT1BeforeT2(timeFunction.apply(element), System.currentTimeMillis())) {
                     elements.remove(key);
                     this.cancel();
@@ -64,7 +75,6 @@ public class MyCache<K, V> implements Cache<K, V> {
             }
         };
     }
-
 
     private boolean isT1BeforeT2(long t1, long t2) {
         return t1 < t2 + TIME_THRESHOLD_MS;
@@ -77,16 +87,14 @@ public class MyCache<K, V> implements Cache<K, V> {
 
     @Override
     public V get(K key) {
-        if (elements.containsKey(key)) {
-            ElementOfCache<K, V> elem = elements.get(key);
-            if (elem != null) {
+        if (elements.containsKey(key) && elements.get(key) != null) {
+            ElementOfCache<K, V> elem = elements.get(key).get();
+            if (elem != null && elem.getValue() != null) {
                 hit++;
                 elem.setLastAccessTime();
                 System.out.println("hits: " + hit);
                 return elem.getValue();
-            }
-            V value = elem.getValue();
-            if (value == null) {
+            } else {
                 miss++;
                 System.out.println("miss: " + miss);
                 return null;
