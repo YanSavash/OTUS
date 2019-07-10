@@ -3,6 +3,9 @@ package ru.netrax.cache;
 import java.lang.ref.SoftReference;
 import java.util.*;
 import java.util.function.Function;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class MyCache<K, V> implements Cache<K, V> {
     private static final int TIME_THRESHOLD_MS = 5;
@@ -28,21 +31,9 @@ public class MyCache<K, V> implements Cache<K, V> {
     @Override
     public void put(K key, V value) {
         if (elements.size() == maxElements) {
-            //как-то так проверил на самого бесполезного, но это жесть какая-то
-            //обязательно ли использовать столько проверок на null?
-            //может есть смысл использовать здесь Optional? но тогда сильно усложнится весь остальной функционал,
-            //потому что его придёться использовать везде
-            K foolKey = elements.keySet().iterator().next();
-            long time = Objects.requireNonNull(elements.get(foolKey).get()).getLastAccessTime();
-            for (Map.Entry<K, SoftReference<ElementOfCache<K, V>>> entry : elements.entrySet()) {
-                if (entry.getValue() != null)
-                    if (entry.getValue().get() != null)
-                        if (time > Objects.requireNonNull(entry.getValue().get()).getLastAccessTime()) {
-                            time = Objects.requireNonNull(entry.getValue().get()).getLastAccessTime();
-                            foolKey = entry.getKey();
-                        }
-            }
-            elements.remove(foolKey);
+            K keyDelete = elements.values().stream()
+                    .min((p1, p2) -> Long.compare(p1.get().getLastAccessTime(), p2.get().getLastAccessTime())).get().get().getKey();
+            elements.remove(keyDelete);
         }
         elements.put(key, new SoftReference<>(new ElementOfCache<>(key, value)));
 
