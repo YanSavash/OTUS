@@ -49,7 +49,6 @@ public class MyCache<K, V> implements Cache<K, V> {
     }
 
     public void dispose() {
-        if (elements.size() == 0)
             timer.cancel();
     }
 
