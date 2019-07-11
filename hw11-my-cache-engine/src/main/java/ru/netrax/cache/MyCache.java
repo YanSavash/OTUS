@@ -3,9 +3,6 @@ package ru.netrax.cache;
 import java.lang.ref.SoftReference;
 import java.util.*;
 import java.util.function.Function;
-import java.util.stream.Collector;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class MyCache<K, V> implements Cache<K, V> {
     private static final int TIME_THRESHOLD_MS = 5;
@@ -31,9 +28,11 @@ public class MyCache<K, V> implements Cache<K, V> {
     @Override
     public void put(K key, V value) {
         if (elements.size() == maxElements) {
-            K keyDelete = elements.values().stream()
-                    .min((p1, p2) -> Long.compare(p1.get().getLastAccessTime(), p2.get().getLastAccessTime())).get().get().getKey();
-            elements.remove(keyDelete);
+                K keyDelete = Objects.requireNonNull(elements.values().stream()
+                        .min(Comparator.comparingLong(p -> Objects.requireNonNull(p.get()).getLastAccessTime()))
+                        .orElse(elements.get(elements.keySet().iterator().next()))
+                        .get()).getKey();
+                elements.remove(keyDelete);
         }
         elements.put(key, new SoftReference<>(new ElementOfCache<>(key, value)));
 

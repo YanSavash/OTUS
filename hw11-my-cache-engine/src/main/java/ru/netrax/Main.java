@@ -42,5 +42,6 @@ public class Main {
         dbService.saveUser(user);
         System.out.println(dbService.findUser(1));
         dbService.deleteUser(1);
+        dbService.disposeTimer();
     }
 }

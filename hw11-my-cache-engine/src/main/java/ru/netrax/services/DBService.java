@@ -20,8 +20,8 @@ public class DBService implements DBServiceInterface {
     }
 
     public void saveUser(User user) {
-            usersDao.save((User) user);
-            myCache.put(user.getId(), user);
+        usersDao.save((User) user);
+        myCache.put(user.getId(), user);
     }
 
     public void deleteUser(long id) {
@@ -29,6 +29,10 @@ public class DBService implements DBServiceInterface {
         usersDao.delete(id);
         System.out.println("delete from my cache: " + findUser(id));
         myCache.remove(id);
+    }
+
+    @Override
+    public void disposeTimer() {
         myCache.dispose();
     }
 }
