@@ -6,7 +6,7 @@ import ru.netrax.models.User;
 
 public class DBService implements DBServiceInterface {
     private UserDao usersDao;
-    private MyCache<Long, User> myCache = new MyCache<>(3, 0, 0, true);
+    private MyCache<Long, User> myCache = new MyCache<>(1, 0, 0, true);
 
     public DBService(UserDao usersDao) {
         this.usersDao = usersDao;
@@ -32,7 +32,7 @@ public class DBService implements DBServiceInterface {
     }
 
     @Override
-    public void disposeTimer() {
-        myCache.dispose();
+    public void closeTimer() throws Exception {
+        myCache.close();
     }
 }

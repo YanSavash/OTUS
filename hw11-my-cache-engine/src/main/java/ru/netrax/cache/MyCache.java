@@ -4,7 +4,7 @@ import java.lang.ref.SoftReference;
 import java.util.*;
 import java.util.function.Function;
 
-public class MyCache<K, V> implements Cache<K, V> {
+public class MyCache<K, V> implements Cache<K, V>,AutoCloseable {
     private static final int TIME_THRESHOLD_MS = 5;
 
     private final int maxElements;
@@ -27,13 +27,8 @@ public class MyCache<K, V> implements Cache<K, V> {
 
     @Override
     public void put(K key, V value) {
-        if (elements.size() == maxElements) {
-                K keyDelete = Objects.requireNonNull(elements.values().stream()
-                        .min(Comparator.comparingLong(p -> Objects.requireNonNull(p.get()).getLastAccessTime()))
-                        .orElse(elements.get(elements.keySet().iterator().next()))
-                        .get()).getKey();
-                elements.remove(keyDelete);
-        }
+        if (elements.size() == 1)
+            deleteUselessElement();
         elements.put(key, new SoftReference<>(new ElementOfCache<>(key, value)));
 
         if (!isEternal) {
@@ -48,8 +43,19 @@ public class MyCache<K, V> implements Cache<K, V> {
         }
     }
 
-    public void dispose() {
-            timer.cancel();
+    private void deleteUselessElement() {
+        ElementOfCache<K, V> deleteElement = elements.values().stream()
+                .min(Comparator.comparingLong(p -> {
+                    ElementOfCache elementOfCache = p.get();
+                    return elementOfCache != null ? elementOfCache.getLastAccessTime() : 0;
+                }))
+                .orElse(elements.get(elements.keySet().iterator().next()))
+                .get();
+        elements.remove(deleteElement != null ? deleteElement.getKey() : 0);
+    }
+
+    private void dispose() {
+        timer.cancel();
     }
 
     private TimerTask getTimerTask(final K key, Function<ElementOfCache<K, V>, Long> timeFunction) {
@@ -92,5 +98,10 @@ public class MyCache<K, V> implements Cache<K, V> {
         miss++;
         System.out.println("miss: " + miss);
         return null;
+    }
+
+    @Override
+    public void close() throws Exception {
+        dispose();
     }
 }

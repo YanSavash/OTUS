@@ -10,5 +10,5 @@ public interface DBServiceInterface {
 
     public void deleteUser(long id);
 
-    public void disposeTimer();
+    public void closeTimer() throws Exception;
 }
