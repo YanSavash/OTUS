@@ -9,6 +9,4 @@ public interface DBServiceInterface {
     public void saveUser(User t);
 
     public void deleteUser(long id);
-
-    public void closeTimer() throws Exception;
 }

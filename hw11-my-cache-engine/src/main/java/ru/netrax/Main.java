@@ -58,13 +58,13 @@ public class Main {
         user2.setAge(25);
         user2.setPhoneDataSetList(list2);
 
-        DBServiceInterface dbService = new DBService(new UserDaoImp(HibernateSessionFactoryUtil
-                .getSessionFactory("hibernate.cfg.xml", User.class, PhoneDataSet.class, AddressDataSet.class)));
-        System.out.println("============================================================================================== " + user);
-        dbService.saveUser(user);
-        dbService.saveUser(user2);
-        System.out.println("============================================================================================== " + dbService.findUser(2));
-        dbService.deleteUser(2);
-        dbService.closeTimer();
+        try (DBService dbService = new DBService(new UserDaoImp(HibernateSessionFactoryUtil
+                .getSessionFactory("hibernate.cfg.xml", User.class, PhoneDataSet.class, AddressDataSet.class)))) {
+            System.out.println("============================================================================================== " + user);
+            dbService.saveUser(user);
+            dbService.saveUser(user2);
+            System.out.println("============================================================================================== " + dbService.findUser(2));
+            dbService.deleteUser(2);
+        }
     }
 }

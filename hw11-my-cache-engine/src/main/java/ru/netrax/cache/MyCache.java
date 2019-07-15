@@ -4,7 +4,7 @@ import java.lang.ref.SoftReference;
 import java.util.*;
 import java.util.function.Function;
 
-public class MyCache<K, V> implements Cache<K, V>,AutoCloseable {
+public class MyCache<K, V> implements Cache<K, V> {
     private static final int TIME_THRESHOLD_MS = 5;
 
     private final int maxElements;
@@ -54,7 +54,7 @@ public class MyCache<K, V> implements Cache<K, V>,AutoCloseable {
         elements.remove(deleteElement != null ? deleteElement.getKey() : 0);
     }
 
-    private void dispose() {
+    public void dispose() {
         timer.cancel();
     }
 
@@ -98,10 +98,5 @@ public class MyCache<K, V> implements Cache<K, V>,AutoCloseable {
         miss++;
         System.out.println("miss: " + miss);
         return null;
-    }
-
-    @Override
-    public void close() throws Exception {
-        dispose();
     }
 }

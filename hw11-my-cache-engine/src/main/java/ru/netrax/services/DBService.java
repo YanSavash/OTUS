@@ -4,7 +4,7 @@ import ru.netrax.cache.MyCache;
 import ru.netrax.dao.UserDao;
 import ru.netrax.models.User;
 
-public class DBService implements DBServiceInterface {
+public class DBService implements DBServiceInterface, AutoCloseable {
     private UserDao usersDao;
     private MyCache<Long, User> myCache = new MyCache<>(1, 0, 0, true);
 
@@ -32,7 +32,7 @@ public class DBService implements DBServiceInterface {
     }
 
     @Override
-    public void closeTimer() throws Exception {
-        myCache.close();
+    public void close() throws Exception {
+        myCache.dispose();
     }
 }
