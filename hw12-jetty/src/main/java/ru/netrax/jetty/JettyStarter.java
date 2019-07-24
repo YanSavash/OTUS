@@ -47,7 +47,7 @@ public class JettyStarter {
 
         context.addServlet(new ServletHolder(new SaveNewUserServlet(dbService)), "/save");
 
-        context.addServlet(new ServletHolder(new LoadTableServlet(dbService)), "/load");
+        context.addServlet(new ServletHolder(new LoadTableServlet(dbService,context.getServletContext())), "/load");
 
         context.addFilter(new FilterHolder(new SimpleFilter()), "/*", null);
 
