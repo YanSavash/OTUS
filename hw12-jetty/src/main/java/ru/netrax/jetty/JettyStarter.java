@@ -20,7 +20,6 @@ import ru.netrax.servlets.*;
 import ru.netrax.utils.HibernateSessionFactoryUtil;
 
 import java.io.*;
-import java.net.MalformedURLException;
 import java.net.URL;
 
 public class JettyStarter {
@@ -34,21 +33,21 @@ public class JettyStarter {
         server.join();
     }
 
-    private Server createServer() throws MalformedURLException {
+    private Server createServer() throws IOException {
         Server server = new Server(PORT);
 
         ServletContextHandler context = new ServletContextHandler(server, "/",
                 ServletContextHandler.SESSIONS | ServletContextHandler.SECURITY);
 
-        context.addServlet(new ServletHolder(new WelcomePage()), "/welcome page");
+        context.addServlet(new ServletHolder(new WelcomePageServlet()), "/welcome page");
 
-        context.addServlet(new ServletHolder(new LogInPage()), "/login");
+        context.addServlet(new ServletHolder(new LogInPageServlet()), "/login");
 
-        context.addServlet(new ServletHolder(new LogInError()), "/login-error");
+        context.addServlet(new ServletHolder(new LogInErrorServlet()), "/login-error");
 
-        context.addServlet(new ServletHolder(new SaveNewUser(dbService)), "/save");
+        context.addServlet(new ServletHolder(new SaveNewUserServlet(dbService)), "/save");
 
-        context.addServlet(new ServletHolder(new LoadTable(dbService)), "/load");
+        context.addServlet(new ServletHolder(new LoadTableServlet(dbService)), "/load");
 
         context.addFilter(new FilterHolder(new SimpleFilter()), "/*", null);
 
