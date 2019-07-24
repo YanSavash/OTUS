@@ -1,7 +1,5 @@
 package ru.netrax.utils;
 
-import freemarker.cache.FileTemplateLoader;
-import freemarker.cache.TemplateLoader;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
@@ -20,16 +18,23 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class TemplateHelper {
-    public static String getPage(DBServiceInterface<User> dbService, HttpServletRequest request, ServletContext servletContext) throws IOException {
+public class TemplateUtil {
+    private DBServiceInterface<User> dbService;
+    private Template template;
+
+    public TemplateUtil(DBServiceInterface<User> dbService, ServletContext servletContext) throws IOException {
         Configuration configuration = new Configuration(Configuration.VERSION_2_3_28);
         configuration.setDirectoryForTemplateLoading(new File(servletContext.getRealPath("")));
         configuration.setTemplateExceptionHandler(TemplateExceptionHandler.HTML_DEBUG_HANDLER);
+        template = configuration.getTemplate(("showTable.tpl"));
+        this.dbService = dbService;
+    }
+
+    public String getPage(HttpServletRequest request) throws IOException {
         Map<String, Object> root = new HashMap<>();
         root.put("admin", request.getUserPrincipal().getName());
         List<User> users = new ArrayList<>(dbService.getAllUsers());
         root.put("users", users);
-        Template template = configuration.getTemplate(("showTable.tpl"));
         Writer out = new StringWriter();
         try {
             template.process(root, out);

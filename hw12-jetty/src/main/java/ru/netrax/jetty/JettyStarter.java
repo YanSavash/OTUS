@@ -18,6 +18,7 @@ import ru.netrax.services.DBService;
 import ru.netrax.services.DBServiceInterface;
 import ru.netrax.servlets.*;
 import ru.netrax.utils.HibernateSessionFactoryUtil;
+import ru.netrax.utils.TemplateUtil;
 
 import java.io.*;
 import java.net.URL;
@@ -38,6 +39,8 @@ public class JettyStarter {
 
         ServletContextHandler context = new ServletContextHandler(server, "/",
                 ServletContextHandler.SESSIONS | ServletContextHandler.SECURITY);
+        context.setBaseResource(Resource.newResource(JettyStarter.class.getResource("/static")));
+        TemplateUtil templateUtil = new TemplateUtil(dbService, context.getServletContext());
 
         context.addServlet(new ServletHolder(new WelcomePageServlet()), "/welcome page");
 
@@ -47,11 +50,9 @@ public class JettyStarter {
 
         context.addServlet(new ServletHolder(new SaveNewUserServlet(dbService)), "/save");
 
-        context.addServlet(new ServletHolder(new LoadTableServlet(dbService,context.getServletContext())), "/load");
+        context.addServlet(new ServletHolder(new LoadTableServlet(templateUtil)), "/load");
 
         context.addFilter(new FilterHolder(new SimpleFilter()), "/*", null);
-
-        context.setBaseResource(Resource.newResource(JettyStarter.class.getResource("/static")));
         context.addServlet(DefaultServlet.class, "/");
 
         Constraint constraint = new Constraint();
