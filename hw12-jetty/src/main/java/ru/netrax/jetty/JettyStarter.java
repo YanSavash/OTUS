@@ -40,17 +40,17 @@ public class JettyStarter {
         ServletContextHandler context = new ServletContextHandler(server, "/",
                 ServletContextHandler.SESSIONS | ServletContextHandler.SECURITY);
         context.setBaseResource(Resource.newResource(JettyStarter.class.getResource("/static")));
-        TemplateUtil templateUtil = new TemplateUtil(dbService, context.getServletContext());
+        TemplateUtil templateUtil = new TemplateUtil(context.getServletContext());
 
         context.addServlet(new ServletHolder(new WelcomePageServlet()), "/welcome page");
 
-        context.addServlet(new ServletHolder(new LogInPageServlet()), "/login");
+        context.addServlet(new ServletHolder(new LogInPageServlet(templateUtil)), "/login");
 
-        context.addServlet(new ServletHolder(new LogInErrorServlet()), "/login-error");
+        context.addServlet(new ServletHolder(new LogInErrorServlet(templateUtil)), "/login-error");
 
-        context.addServlet(new ServletHolder(new SaveNewUserServlet(dbService)), "/save");
+        context.addServlet(new ServletHolder(new SaveNewUserServlet(dbService, templateUtil)), "/save");
 
-        context.addServlet(new ServletHolder(new LoadTableServlet(templateUtil)), "/load");
+        context.addServlet(new ServletHolder(new LoadTableServlet(templateUtil, dbService)), "/load");
 
         context.addFilter(new FilterHolder(new SimpleFilter()), "/*", null);
         context.addServlet(DefaultServlet.class, "/");

@@ -2,7 +2,7 @@ package ru.netrax.servlets;
 
 import ru.netrax.models.User;
 import ru.netrax.services.DBServiceInterface;
-import ru.netrax.utils.ServletHelper;
+import ru.netrax.utils.TemplateUtil;
 
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -11,21 +11,23 @@ import java.io.IOException;
 
 public class SaveNewUserServlet extends HttpServlet {
     private DBServiceInterface<User> dbService;
+    private TemplateUtil templateUtil;
 
-    public SaveNewUserServlet(DBServiceInterface<User> dbService) {
+    public SaveNewUserServlet(DBServiceInterface<User> dbService, TemplateUtil templateUtil) {
         this.dbService = dbService;
+        this.templateUtil = templateUtil;
     }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse response) throws IOException {
-        response.getWriter().append(ServletHelper.readPage("static/createUser.html"));
+        response.getWriter().append(templateUtil.getPage("static/createUser.html"));
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         dbService.saveUser(getUser(request));
 
-        response.getWriter().append(ServletHelper.readPage("static/createUser.html"));
+        response.getWriter().append(templateUtil.getPage("static/createUser.html"));
     }
 
     private User getUser(HttpServletRequest request) {
