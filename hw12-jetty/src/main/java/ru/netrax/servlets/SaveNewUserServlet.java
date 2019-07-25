@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.HashMap;
 
 public class SaveNewUserServlet extends HttpServlet {
     private DBServiceInterface<User> dbService;
@@ -20,14 +21,13 @@ public class SaveNewUserServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse response) throws IOException {
-        response.getWriter().append(templateUtil.getPage("static/createUser.html"));
+        response.getWriter().append(templateUtil.getPage("createUser.tpl", new HashMap<>()));
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         dbService.saveUser(getUser(request));
-
-        response.getWriter().append(templateUtil.getPage("static/createUser.html"));
+        response.getWriter().append(templateUtil.getPage("createUser.tpl", new HashMap<>()));
     }
 
     private User getUser(HttpServletRequest request) {
