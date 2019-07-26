@@ -27,6 +27,7 @@
         <module>hw10-hibernate</module>
         <module>hw11-my-cache-engine</module>
         <module>hw12-jetty</module>
+        <module>hw13-Tomcat-and-Spring</module>
     </modules>
 
     <properties>
