@@ -14,14 +14,15 @@ import java.util.List;
 public class UserRepositoryImp implements UserRepository {
     private SessionFactory sessionFactory;
 
-    public void setSessionFactory(SessionFactory sessionFactory) {
-        this.sessionFactory = sessionFactory;
+    public UserRepositoryImp() {
+        sessionFactory = HibernateSessionFactoryUtil.
+                getSessionFactory("hibernate.cfg.xml", User.class);
     }
 
     @Override
     public User findById(long id) {
         User user;
-        try (Session session = sessionFactory.getCurrentSession()) {
+        try (Session session = sessionFactory.openSession()) {
             Transaction transaction = session.beginTransaction();
             user = session.get(User.class, id);
             transaction.commit();
@@ -31,7 +32,7 @@ public class UserRepositoryImp implements UserRepository {
 
     @Override
     public void save(User user) {
-        try (Session session = sessionFactory.getCurrentSession()) {
+        try (Session session = sessionFactory.openSession()) {
             Transaction transaction = session.beginTransaction();
             session.save(user);
             transaction.commit();
@@ -41,7 +42,7 @@ public class UserRepositoryImp implements UserRepository {
     @Override
     public List<User> getAllUsers() {
         List<User> list = new ArrayList();
-        try (Session session = sessionFactory.getCurrentSession()) {
+        try (Session session = sessionFactory.openSession()) {
             long count = ((Long)session.createQuery("select count(*) from User").uniqueResult());
 
             User user;

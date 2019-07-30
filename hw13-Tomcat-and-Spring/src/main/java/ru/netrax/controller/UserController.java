@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.view.RedirectView;
 import ru.netrax.models.User;
+import ru.netrax.services.DBService;
 import ru.netrax.services.DBServiceInterface;
 
 import java.util.List;
@@ -16,8 +17,8 @@ public class UserController {
 
     private final DBServiceInterface repository;
 
-    public UserController(DBServiceInterface repository) {
-        this.repository = repository;
+    public UserController() {
+        repository = new DBService();
     }
 
     @GetMapping({"/", "/user/list"})

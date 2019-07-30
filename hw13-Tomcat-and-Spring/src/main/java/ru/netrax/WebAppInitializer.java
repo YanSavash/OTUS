@@ -6,7 +6,6 @@ import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatche
 import javax.servlet.Filter;
 
 public class WebAppInitializer extends AbstractAnnotationConfigDispatcherServletInitializer {
-    //https://docs.spring.io/spring/docs/current/spring-framework-reference/web.html
 
     @Override
     protected Class<?>[] getRootConfigClasses() {
