@@ -22,12 +22,11 @@ public class WebConfig {
     }
 
     @Bean
-    public SpringResourceTemplateResolver templateResolver() {
+    protected SpringResourceTemplateResolver templateResolver() {
         SpringResourceTemplateResolver templateResolver = new SpringResourceTemplateResolver();
         templateResolver.setApplicationContext(this.applicationContext);
 //        почему-то с вашими настройками не находил шаблоны
 //        templateResolver.setPrefix("/WEB-INF/templates/");
-//        templateResolver.setSuffix(".html");
         templateResolver.setPrefix("");
         templateResolver.setSuffix(".html");
         templateResolver.setTemplateMode(TemplateMode.HTML);
@@ -37,7 +36,7 @@ public class WebConfig {
     }
 
     @Bean
-    public SpringTemplateEngine templateEngine() {
+    protected SpringTemplateEngine templateEngine() {
         SpringTemplateEngine templateEngine = new SpringTemplateEngine();
         templateEngine.setTemplateResolver(templateResolver());
         return templateEngine;

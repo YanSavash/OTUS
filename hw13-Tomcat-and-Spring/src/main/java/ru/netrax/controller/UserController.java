@@ -15,15 +15,11 @@ import java.util.List;
 @Controller
 public class UserController {
 
-    private final DBServiceInterface repository;
-
-    public UserController() {
-        repository = new DBService();
-    }
+    private final DBServiceInterface repository = new DBService();
 
     @GetMapping({"/", "/user/list"})
     public String userList(Model model) {
-        List<User> users = repository.getAllUsers();
+        List users = repository.getAllUsers();
         model.addAttribute("users", users);
         return "WEB-INF/templates/userList.html";
     }

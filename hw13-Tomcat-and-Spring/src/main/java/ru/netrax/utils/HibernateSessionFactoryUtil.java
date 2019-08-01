@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class HibernateSessionFactoryUtil {
-    private static SessionFactory sessionFactory;
 
     public static SessionFactory getSessionFactory(String configurationFile, Class<?>... t) {
         Configuration configuration = new Configuration()
@@ -25,7 +24,6 @@ public class HibernateSessionFactoryUtil {
         }
         Metadata metadata = metadataSources.getMetadataBuilder().build();
 
-        sessionFactory = metadata.getSessionFactoryBuilder().build();
-        return sessionFactory;
+        return metadata.getSessionFactoryBuilder().build();
     }
 }
