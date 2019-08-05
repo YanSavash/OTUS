@@ -2,6 +2,7 @@ package ru.netrax;
 
 public class Main {
     private final Object monitor = new Object();
+    private String str = "";
 
     public static void main(String[] args) {
         Main main = new Main();
@@ -19,7 +20,10 @@ public class Main {
         try {
             for (int i = 1; i < 10; i++) {
                 synchronized (monitor) {
-                    System.out.println(Thread.currentThread().getName() + " " + i);
+                    if (!Thread.currentThread().getName().equals(str)) {
+                        str = Thread.currentThread().getName();
+                        System.out.println(Thread.currentThread().getName() + " " + i);
+                    } else i--;
                     Thread.sleep(500);
                 }
                 Thread.sleep(500);
@@ -33,7 +37,10 @@ public class Main {
         try {
             for (int i = 10; i > 1; i--) {
                 synchronized (monitor) {
-                    System.out.println(Thread.currentThread().getName() + " " + i);
+                    if (!Thread.currentThread().getName().equals(str)) {
+                        str = Thread.currentThread().getName();
+                        System.out.println(Thread.currentThread().getName() + " " + i);
+                    } else i++;
                     Thread.sleep(500);
                 }
                 Thread.sleep(500);
