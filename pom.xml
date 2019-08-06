@@ -28,6 +28,7 @@
         <module>hw11-my-cache-engine</module>
         <module>hw12-jetty</module>
         <module>hw13-Tomcat-and-Spring</module>
+        <module>hw14-threads</module>
     </modules>
 
     <properties>
