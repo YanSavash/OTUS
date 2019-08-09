@@ -29,7 +29,6 @@ public class WebConfig {
 //        templateResolver.setPrefix("/WEB-INF/templates/");
         templateResolver.setPrefix("");
         templateResolver.setSuffix(".html");
-//        templateResolver.setSuffix("");
         templateResolver.setTemplateMode(TemplateMode.HTML);
         templateResolver.setCacheable(true);
         templateResolver.setCharacterEncoding("UTF-8");
