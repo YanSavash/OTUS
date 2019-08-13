@@ -29,6 +29,7 @@
         <module>hw12-jetty</module>
         <module>hw13-Tomcat-and-Spring</module>
         <module>hw14-threads</module>
+        <module>hw15-message-system</module>
     </modules>
 
     <properties>

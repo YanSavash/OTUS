@@ -10,9 +10,10 @@
     <modelVersion>4.0.0</modelVersion>
 
     <packaging>war</packaging>
-    <name>Accounts</name>
+    <name>Messages</name>
 
-    <artifactId>hw13-Tomcat-and-Spring</artifactId>
+    <artifactId>hw15-message-system</artifactId>
+
     <properties>
         <maven.compiler.source>11</maven.compiler.source>
         <maven.compiler.target>11</maven.compiler.target>
@@ -115,5 +116,4 @@
             </plugin>
         </plugins>
     </build>
-
 </project>
